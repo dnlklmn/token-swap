@@ -70,13 +70,31 @@ export function MoreIcon({ size, className }: IconProps) {
   );
 }
 
-// token icons
-export function AcalaCircle() {
+export function RightClickIcon({ size, className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="25"
+      className={className}
+      height={size ? size : "24"}
+      fill="currentColor"
+      viewBox="0 0 14 24"
+    >
+      <path
+        fillRule="evenodd"
+        d="M.326 7.353a6.674 6.674 0 0113.348 0v9.294a6.674 6.674 0 01-13.348 0V7.353zM7 21.178a4.53 4.53 0 004.53-4.53v-5.67H2.618c-.05 0-.1-.004-.148-.01v5.68A4.53 4.53 0 007 21.177zM6.93 8.835V2.823a4.53 4.53 0 00-4.46 4.53v1.492a1.08 1.08 0 01.147-.01H6.93z"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  );
+}
+
+// token icons
+export function AcalaCircle({ size, className }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size ? size : "24"}
+      className={className}
       fill="none"
       viewBox="0 0 24 25"
     >
@@ -91,12 +109,12 @@ export function AcalaCircle() {
   );
 }
 
-export function HydraCircle() {
+export function HydraCircle({ size, className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width={size ? size : "24"}
+      className={className}
       fill="none"
       viewBox="0 0 24 24"
     >
@@ -111,12 +129,12 @@ export function HydraCircle() {
   );
 }
 
-export function MoonbeamCircle() {
+export function MoonbeamCircle({ size, className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="25"
+      width={size ? size : "24"}
+      className={className}
       fill="none"
       viewBox="0 0 24 25"
     >
@@ -131,12 +149,12 @@ export function MoonbeamCircle() {
   );
 }
 
-export function PolkadotCircle() {
+export function PolkadotCircle({ size, className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="25"
+      width={size ? size : "24"}
+      className={className}
       fill="none"
       viewBox="0 0 24 25"
     >
@@ -159,12 +177,12 @@ export function PolkadotCircle() {
   );
 }
 
-export function EthereumCircle() {
+export function EthereumCircle({ size, className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width={size ? size : "24"}
+      className={className}
       fill="none"
       viewBox="0 0 24 24"
     >

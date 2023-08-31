@@ -19,14 +19,16 @@ import {
 } from "@/components/ui/icons";
 
 import Identicon from "@polkadot/react-identicon";
+import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
+import SendDialogContent from "./components/ui/dialog-content";
 import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle,
-  DialogHeader,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./components/ui/tooltip";
+
+import { TokenTooltipContent } from "./components/ui/tooltip-content";
 
 interface ItemContentProps {
   children?: JSX.Element;
@@ -49,10 +51,21 @@ function ItemContent({ children, label }: ItemContentProps) {
 function TokenLine({ children, currency, amount }: ItemContentProps) {
   return (
     <div className="w-full flex items-center px-2 rounded-md py-1 hover:bg-fill-selected justify-between">
-      <div className="w-full flex items-center gap-2 ">
-        {children}
-        <span>{currency?.toUpperCase()}</span>
-      </div>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div className="w-full flex items-center gap-2 ">
+              {children}
+              <span>{currency?.toUpperCase()}</span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <TokenTooltipContent withHint currency={currency}>
+              {children}
+            </TokenTooltipContent>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <div className="flex gap-2">
         <span>{amount}</span>
       </div>
@@ -146,29 +159,7 @@ function ContextMenuLocal({ children }: ContextMenuLocalProps) {
           <ContextMenuItem>Inspect on Explorer</ContextMenuItem>
         </ContextMenuContent>
         <DialogContent className="gap-6">
-          <DialogHeader>
-            <DialogTitle>Send DOT to 5EZr...25Kd</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-1">
-            <span className="text-sm font-regular text-foreground-dimmed">
-              Amount
-            </span>
-            <div className="flex gap-4 items-center">
-              <input
-                value={20}
-                className="w-full border-border-hint rounded-md bg-background-default hover:border-border-dimmed outline-none focus:border-border-contrast border p-2"
-              />
-              <span className="font-medium">DOT</span>
-            </div>
-          </div>
-          <div className="flex items-center w-full gap-4">
-            <Button variant="outline" className="w-full rounded-full">
-              Cancel
-            </Button>
-            <Button className="w-full bg-fill-primary hover:bg-fill-primary-hover rounded-full">
-              Send
-            </Button>
-          </div>
+          <SendDialogContent />
         </DialogContent>
       </Dialog>
     </ContextMenu>

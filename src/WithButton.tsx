@@ -1,4 +1,11 @@
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -20,14 +27,9 @@ import {
 } from "@/components/ui/icons";
 
 import Identicon from "@polkadot/react-identicon";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import SendDialogContent from "./components/ui/dialog-content";
+import { TokenTooltipContent } from "./components/ui/tooltip-content";
 
 interface ItemContentProps {
   children?: JSX.Element;
@@ -49,20 +51,29 @@ function ItemContent({ children, label }: ItemContentProps) {
 
 function TokenLine({ children, currency, amount }: ItemContentProps) {
   return (
-    <div className="w-full flex items-center px-2 rounded-md py-1 hover:bg-fill-selected justify-between">
-      <ContextMenuLocal>
-        <div className="w-full flex items-center gap-2 ">
-          {children}
-          <span>{currency?.toUpperCase()}</span>
+    <TooltipProvider>
+      <Tooltip>
+        <div className="w-full flex items-center px-2 rounded-md py-1 hover:bg-fill-selected justify-between">
+          <TooltipTrigger className="w-full">
+            <div className="flex items-center gap-2 ">
+              {children}
+              <span>{currency?.toUpperCase()}</span>
+            </div>
+          </TooltipTrigger>
+          <ContextMenuLocal>
+            <div className="flex flex-none gap-4">
+              <span>{amount}</span>
+              <MoreIcon className="transition-all duration-75" size="16" />
+            </div>
+          </ContextMenuLocal>
         </div>
-      </ContextMenuLocal>
-      <ContextMenuLocal>
-        <div className="flex gap-4">
-          <span>{amount}</span>
-          <MoreIcon className="transition-all duration-75" size="16" />
-        </div>
-      </ContextMenuLocal>
-    </div>
+        <TooltipContent>
+          <TokenTooltipContent currency={currency}>
+            {children}
+          </TokenTooltipContent>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -152,29 +163,7 @@ function ContextMenuLocal({ children }: ContextMenuLocalProps) {
           <DropdownMenuItem>Inspect on Explorer</DropdownMenuItem>
         </DropdownMenuContent>
         <DialogContent className="gap-6">
-          <DialogHeader>
-            <DialogTitle>Send DOT to 5EZr...25Kd</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-1">
-            <span className="text-sm font-regular text-foreground-dimmed">
-              Amount
-            </span>
-            <div className="flex gap-4 items-center">
-              <input
-                value={20}
-                className="w-full border-border-hint rounded-md bg-background-default hover:border-border-dimmed outline-none focus:border-border-contrast border p-2"
-              />
-              <span className="font-medium">DOT</span>
-            </div>
-          </div>
-          <div className="flex items-center w-full gap-4">
-            <Button variant="outline" className="w-full rounded-full">
-              Cancel
-            </Button>
-            <Button className="w-full bg-fill-primary hover:bg-fill-primary-hover rounded-full">
-              Send
-            </Button>
-          </div>
+          <SendDialogContent />
         </DialogContent>
       </Dialog>
     </DropdownMenu>
