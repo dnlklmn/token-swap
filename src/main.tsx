@@ -36,9 +36,13 @@ export const tokens = [
 export function TokenCircle({ chain }: { chain: any }) {
   return (
     <>
-      {chain === "DOT" && <PolkadotCircle />}
-      {chain === "GLMR" && <MoonbeamCircle />}
-      {chain === "ACA" && <AcalaCircle />}
+      {chain === "ACA" ? (
+        <AcalaCircle />
+      ) : chain === "GLMR" ? (
+        <MoonbeamCircle />
+      ) : (
+        <PolkadotCircle />
+      )}
     </>
   );
 }

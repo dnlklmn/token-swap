@@ -20,25 +20,18 @@ import {
 import Identicon from "@polkadot/react-identicon";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import SendDialogContent from "./components/ui/dialog-content";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./components/ui/tooltip";
 
-import { TokenTooltipContent } from "./components/ui/tooltip-content";
 import { useState } from "react";
-import { TokenCircle, addresses, tokens } from "./main";
+import { addresses, tokens } from "./main";
+import TokenLine from "./components/ui/token-line";
 
-interface ItemContentProps {
+function ItemContent({
+  children,
+  label,
+}: {
   children?: JSX.Element | null;
   label?: String;
-  currency?: String;
-  amount?: String;
-}
-
-function ItemContent({ children, label }: ItemContentProps) {
+}) {
   return (
     <ContextMenuItem>
       <div className="flex items-center gap-2 pointer-none">
@@ -46,31 +39,6 @@ function ItemContent({ children, label }: ItemContentProps) {
         <span>{label}</span>
       </div>
     </ContextMenuItem>
-  );
-}
-
-function TokenLine({ children, currency, amount }: ItemContentProps) {
-  return (
-    <div className="w-full flex items-center px-2 rounded-md py-1 hover:bg-fill-selected justify-between">
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <div className="w-full flex items-center gap-2 ">
-              {children}
-              <span>{currency}</span>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>
-            <TokenTooltipContent withHint currency={currency}>
-              {children}
-            </TokenTooltipContent>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-      <div className="flex gap-2">
-        <span>{amount}</span>
-      </div>
-    </div>
   );
 }
 
@@ -164,9 +132,10 @@ function ContextMenuLocal({
 
 export default function InContextMenu() {
   return (
-    <div className="w-full flex gap-6 px-8 h-full text-foreground-contrast">
-      <div className="w-2/3 h-[512px] bg-background-dip rounded-md h-128" />
-      <div className="flex w-1/3 flex-col gap-6">
+    <div className="w-full flex flex-col-reverse lg:flex-row gap-6 px-8 h-full text-foreground-contrast">
+      <div className="w-full lg:w-2/3 h-[512px] bg-background-dip rounded-md" />
+
+      <div className="flex w-full lg:w-1/3 flex-col gap-6">
         <div className="flex flex-col h-fit p-4 gap-2 rounded-lg text-lg font-medium overflow-hidden bg-background-float shadow-[inset_0_0_1px_1px_rgba(0,0,0,0.07)] dark:shadow-[inset_0_0_1px_1px_rgba(255,255,255,0.05)]">
           <span className="text-lg px-2 font-medium my-4">
             Polkadot Assets Hub
@@ -174,7 +143,11 @@ export default function InContextMenu() {
           {tokens.map((token) => (
             <ContextMenuLocal token={token.currency}>
               <TokenLine currency={token.currency} amount={token.amount}>
-                <TokenCircle chain={token.currency} />
+                <ContextMenuLocal token={token.currency}>
+                  <div className="flex flex-none gap-4 cursor-pointer">
+                    <span>{token.amount}</span>
+                  </div>
+                </ContextMenuLocal>
               </TokenLine>
             </ContextMenuLocal>
           ))}
