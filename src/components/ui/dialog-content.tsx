@@ -4,14 +4,18 @@ import { DialogHeader } from "./dialog";
 
 interface SendDialogContentProps {
   address?: any;
+  token?: string;
 }
 
-export default function SendDialogContent({ address }: SendDialogContentProps) {
+export default function SendDialogContent({
+  address,
+  token,
+}: SendDialogContentProps) {
   return (
     <>
       <DialogHeader>
         <DialogTitle>
-          Send DOT to{" "}
+          Send {token} to{" "}
           {address.name
             ? address.name
             : `${address.ss58.slice(0, 4)}
@@ -28,7 +32,7 @@ export default function SendDialogContent({ address }: SendDialogContentProps) {
             value={20}
             className="w-full border-border-hint rounded-md bg-background-default hover:border-border-dimmed outline-none focus:border-border-contrast border p-2"
           />
-          <span className="font-medium">DOT</span>
+          <span className="font-medium">{token}</span>
         </div>
       </div>
       <div className="flex items-center w-full gap-4">

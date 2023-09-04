@@ -30,6 +30,8 @@ import Identicon from "@polkadot/react-identicon";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import SendDialogContent from "./components/ui/dialog-content";
 import { TokenTooltipContent } from "./components/ui/tooltip-content";
+import { TokenCircle, addresses, tokens } from "./main";
+import { useState } from "react";
 
 interface ItemContentProps {
   children?: JSX.Element;
@@ -60,12 +62,12 @@ function TokenLine({ children, currency, amount }: ItemContentProps) {
               <span>{currency?.toUpperCase()}</span>
             </div>
           </TooltipTrigger>
-          <ContextMenuLocal>
+          <DropdownMenuLocal token={currency}>
             <div className="flex flex-none gap-4">
               <span>{amount}</span>
               <MoreIcon className="transition-all duration-75" size="16" />
             </div>
-          </ContextMenuLocal>
+          </DropdownMenuLocal>
         </div>
         <TooltipContent>
           <TokenTooltipContent currency={currency}>
@@ -77,11 +79,14 @@ function TokenLine({ children, currency, amount }: ItemContentProps) {
   );
 }
 
-interface ContextMenuLocalProps {
+function DropdownMenuLocal({
+  children,
+  token,
+}: {
   children?: JSX.Element;
-}
-
-function ContextMenuLocal({ children }: ContextMenuLocalProps) {
+  token?: String;
+}) {
+  const [currentAddress, setCurrentAddress] = useState(0);
   return (
     <DropdownMenu>
       <Dialog>
@@ -112,44 +117,33 @@ function ContextMenuLocal({ children }: ContextMenuLocalProps) {
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Send to Address</DropdownMenuSubTrigger>
             <DropdownMenuSubContent className="w-48">
-              <DialogTrigger className="w-full">
-                <ItemContent label="Stash Account">
-                  <Identicon
-                    value="15UktDFzD6o3dS1ibxDpBbkzNX6jaEkjAe5nHcWUBMrq3SGj"
-                    theme="polkadot"
-                    size={24}
-                  />
-                </ItemContent>
-              </DialogTrigger>
-              <DropdownMenuSeparator />
-              <DialogTrigger className="w-full">
-                <ItemContent label="5EZr...25Kd">
-                  <Identicon
-                    value="5EZrUD2S9ZyXPbZj88Ruu6ZdWCDYnxsu8sD37JW2tAU125Kd"
-                    theme="polkadot"
-                    size={24}
-                  />
-                </ItemContent>
-              </DialogTrigger>
-              <DialogTrigger className="w-full">
-                <ItemContent label="a7dK...3y5E">
-                  <Identicon
-                    value="a7dKBTCuTt6ZzGEgL9nQsSWKPZrxVrDghe8NP9KhCoy3y5E"
-                    theme="polkadot"
-                    size={24}
-                  />
-                </ItemContent>
-              </DialogTrigger>
-              <DialogTrigger className="w-full">
-                <ItemContent label="Eco Stash">
-                  <Identicon
-                    value="Xyi6j3P1d8LHMVPydzBn7yz2pojbKuXTpoNFoZLG57fJzsd"
-                    theme="polkadot"
-                    size={24}
-                  />
-                </ItemContent>
-              </DialogTrigger>
-              <DropdownMenuSeparator />
+              {addresses.map((address, index) => (
+                <>
+                  <DialogTrigger
+                    className="w-full"
+                    onClick={() => setCurrentAddress(index)}
+                  >
+                    <ItemContent
+                      label={
+                        address.name
+                          ? address.name
+                          : `${address?.ss58.slice(0, 4)}...
+                          ${address?.ss58.slice(
+                            address.ss58.length - 4,
+                            address.ss58.length
+                          )}`
+                      }
+                    >
+                      <Identicon
+                        value={address.ss58}
+                        theme="polkadot"
+                        size={24}
+                      />
+                    </ItemContent>
+                  </DialogTrigger>
+                  {address.name && <DropdownMenuSeparator />}
+                </>
+              ))}
               <DialogTrigger className="w-full">
                 <ItemContent label="New Address">
                   <AddIcon />
@@ -163,7 +157,10 @@ function ContextMenuLocal({ children }: ContextMenuLocalProps) {
           <DropdownMenuItem>Inspect on Explorer</DropdownMenuItem>
         </DropdownMenuContent>
         <DialogContent className="gap-6">
-          <SendDialogContent />
+          <SendDialogContent
+            address={addresses[currentAddress]}
+            token={token}
+          />
         </DialogContent>
       </Dialog>
     </DropdownMenu>
@@ -179,15 +176,11 @@ export default function WithButton() {
           <span className="text-lg px-2 font-medium my-4">
             Polkadot Assets Hub
           </span>
-          <TokenLine currency="DOT" amount="142.3901">
-            <PolkadotCircle />
-          </TokenLine>
-          <TokenLine currency="GLMR" amount="73.8311">
-            <MoonbeamCircle />
-          </TokenLine>
-          <TokenLine currency="ACA" amount="0.2506">
-            <AcalaCircle />
-          </TokenLine>
+          {tokens.map((token) => (
+            <TokenLine currency={token.currency} amount={token.amount}>
+              <TokenCircle chain={token.currency} />
+            </TokenLine>
+          ))}
         </div>
       </div>
     </div>

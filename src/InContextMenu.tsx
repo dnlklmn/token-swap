@@ -12,7 +12,6 @@ import {
 import {
   PolkadotCircle,
   AcalaCircle,
-  MoonbeamCircle,
   HydraCircle,
   AddIcon,
   EthereumCircle,
@@ -29,7 +28,8 @@ import {
 } from "./components/ui/tooltip";
 
 import { TokenTooltipContent } from "./components/ui/tooltip-content";
-import React from "react";
+import { useState } from "react";
+import { TokenCircle, addresses, tokens } from "./main";
 
 interface ItemContentProps {
   children?: JSX.Element | null;
@@ -37,25 +37,6 @@ interface ItemContentProps {
   currency?: String;
   amount?: String;
 }
-
-const tokens = [
-  { currency: "DOT", amount: "142.3901" },
-  { currency: "GLMR", amount: "73.8311" },
-  { currency: "ACA", amount: "0.2506" },
-];
-
-const addresses = [
-  {
-    ss58: "15UktDFzD6o3dS1ibxDpBbkzNX6jaEkjAe5nHcWUBMrq3SGj",
-    name: "Stash Account",
-  },
-  { ss58: "5EZrUD2S9ZyXPbZj88Ruu6ZdWCDYnxsu8sD37JW2tAU125Kd" },
-  { ss58: "a7dKBTCuTt6ZzGEgL9nQsSWKPZrxVrDghe8NP9KhCoy3y5E" },
-  {
-    ss58: "Xyi6j3P1d8LHMVPydzBn7yz2pojbKuXTpoNFoZLG57fJzsd",
-    name: "Eco Stash",
-  },
-];
 
 function ItemContent({ children, label }: ItemContentProps) {
   return (
@@ -93,12 +74,14 @@ function TokenLine({ children, currency, amount }: ItemContentProps) {
   );
 }
 
-interface ContextMenuLocalProps {
+function ContextMenuLocal({
+  children,
+  token,
+}: {
   children?: JSX.Element;
-}
-
-function ContextMenuLocal({ children }: ContextMenuLocalProps) {
-  const [currentAddress, setCurrentAddress] = React.useState(0);
+  token?: string;
+}) {
+  const [currentAddress, setCurrentAddress] = useState(0);
   return (
     <ContextMenu>
       <Dialog>
@@ -169,7 +152,10 @@ function ContextMenuLocal({ children }: ContextMenuLocalProps) {
           <ContextMenuItem>Inspect on Explorer</ContextMenuItem>
         </ContextMenuContent>
         <DialogContent className="gap-6">
-          <SendDialogContent address={addresses[currentAddress]} />
+          <SendDialogContent
+            address={addresses[currentAddress]}
+            token={token}
+          />
         </DialogContent>
       </Dialog>
     </ContextMenu>
@@ -186,13 +172,9 @@ export default function InContextMenu() {
             Polkadot Assets Hub
           </span>
           {tokens.map((token) => (
-            <ContextMenuLocal>
+            <ContextMenuLocal token={token.currency}>
               <TokenLine currency={token.currency} amount={token.amount}>
-                <>
-                  {token.currency === "DOT" ? <PolkadotCircle /> : null}
-                  {token.currency === "GLMR" ? <MoonbeamCircle /> : null}
-                  {token.currency === "ACA" ? <AcalaCircle /> : null}
-                </>
+                <TokenCircle chain={token.currency} />
               </TokenLine>
             </ContextMenuLocal>
           ))}
