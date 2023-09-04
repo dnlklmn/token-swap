@@ -4,7 +4,7 @@ import { DialogHeader } from "./dialog";
 
 interface SendDialogContentProps {
   address?: any;
-  token?: string;
+  token?: String;
 }
 
 export default function SendDialogContent({
