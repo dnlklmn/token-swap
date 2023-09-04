@@ -10,7 +10,7 @@ import {
 } from "./icons";
 
 interface TooltipContentProps {
-  children?: JSX.Element;
+  children?: JSX.Element | null;
   currency?: String;
   withHint?: boolean;
 }

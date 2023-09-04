@@ -29,13 +29,33 @@ import {
 } from "./components/ui/tooltip";
 
 import { TokenTooltipContent } from "./components/ui/tooltip-content";
+import React from "react";
 
 interface ItemContentProps {
-  children?: JSX.Element;
+  children?: JSX.Element | null;
   label?: String;
   currency?: String;
   amount?: String;
 }
+
+const tokens = [
+  { currency: "DOT", amount: "142.3901" },
+  { currency: "GLMR", amount: "73.8311" },
+  { currency: "ACA", amount: "0.2506" },
+];
+
+const addresses = [
+  {
+    ss58: "15UktDFzD6o3dS1ibxDpBbkzNX6jaEkjAe5nHcWUBMrq3SGj",
+    name: "Stash Account",
+  },
+  { ss58: "5EZrUD2S9ZyXPbZj88Ruu6ZdWCDYnxsu8sD37JW2tAU125Kd" },
+  { ss58: "a7dKBTCuTt6ZzGEgL9nQsSWKPZrxVrDghe8NP9KhCoy3y5E" },
+  {
+    ss58: "Xyi6j3P1d8LHMVPydzBn7yz2pojbKuXTpoNFoZLG57fJzsd",
+    name: "Eco Stash",
+  },
+];
 
 function ItemContent({ children, label }: ItemContentProps) {
   return (
@@ -56,7 +76,7 @@ function TokenLine({ children, currency, amount }: ItemContentProps) {
           <TooltipTrigger>
             <div className="w-full flex items-center gap-2 ">
               {children}
-              <span>{currency?.toUpperCase()}</span>
+              <span>{currency}</span>
             </div>
           </TooltipTrigger>
           <TooltipContent>
@@ -78,6 +98,7 @@ interface ContextMenuLocalProps {
 }
 
 function ContextMenuLocal({ children }: ContextMenuLocalProps) {
+  const [currentAddress, setCurrentAddress] = React.useState(0);
   return (
     <ContextMenu>
       <Dialog>
@@ -108,44 +129,33 @@ function ContextMenuLocal({ children }: ContextMenuLocalProps) {
           <ContextMenuSub>
             <ContextMenuSubTrigger>Send to Address</ContextMenuSubTrigger>
             <ContextMenuSubContent className="w-48">
-              <DialogTrigger className="w-full">
-                <ItemContent label="Stash Account">
-                  <Identicon
-                    value="15UktDFzD6o3dS1ibxDpBbkzNX6jaEkjAe5nHcWUBMrq3SGj"
-                    theme="polkadot"
-                    size={24}
-                  />
-                </ItemContent>
-              </DialogTrigger>
-              <ContextMenuSeparator />
-              <DialogTrigger className="w-full">
-                <ItemContent label="5EZr...25Kd">
-                  <Identicon
-                    value="5EZrUD2S9ZyXPbZj88Ruu6ZdWCDYnxsu8sD37JW2tAU125Kd"
-                    theme="polkadot"
-                    size={24}
-                  />
-                </ItemContent>
-              </DialogTrigger>
-              <DialogTrigger className="w-full">
-                <ItemContent label="a7dK...3y5E">
-                  <Identicon
-                    value="a7dKBTCuTt6ZzGEgL9nQsSWKPZrxVrDghe8NP9KhCoy3y5E"
-                    theme="polkadot"
-                    size={24}
-                  />
-                </ItemContent>
-              </DialogTrigger>
-              <DialogTrigger className="w-full">
-                <ItemContent label="Eco Stash">
-                  <Identicon
-                    value="Xyi6j3P1d8LHMVPydzBn7yz2pojbKuXTpoNFoZLG57fJzsd"
-                    theme="polkadot"
-                    size={24}
-                  />
-                </ItemContent>
-              </DialogTrigger>
-              <ContextMenuSeparator />
+              {addresses.map((address, index) => (
+                <>
+                  <DialogTrigger
+                    className="w-full"
+                    onClick={() => setCurrentAddress(index)}
+                  >
+                    <ItemContent
+                      label={
+                        address.name
+                          ? address.name
+                          : `${address?.ss58.slice(0, 4)}...
+                          ${address?.ss58.slice(
+                            address.ss58.length - 4,
+                            address.ss58.length
+                          )}`
+                      }
+                    >
+                      <Identicon
+                        value={address.ss58}
+                        theme="polkadot"
+                        size={24}
+                      />
+                    </ItemContent>
+                  </DialogTrigger>
+                  {address.name && <ContextMenuSeparator />}
+                </>
+              ))}
               <DialogTrigger className="w-full">
                 <ItemContent label="New Address">
                   <AddIcon />
@@ -159,12 +169,13 @@ function ContextMenuLocal({ children }: ContextMenuLocalProps) {
           <ContextMenuItem>Inspect on Explorer</ContextMenuItem>
         </ContextMenuContent>
         <DialogContent className="gap-6">
-          <SendDialogContent />
+          <SendDialogContent address={addresses[currentAddress]} />
         </DialogContent>
       </Dialog>
     </ContextMenu>
   );
 }
+
 export default function InContextMenu() {
   return (
     <div className="w-full flex gap-6 px-8 h-full text-foreground-contrast">
@@ -174,21 +185,17 @@ export default function InContextMenu() {
           <span className="text-lg px-2 font-medium my-4">
             Polkadot Assets Hub
           </span>
-          <ContextMenuLocal>
-            <TokenLine currency="DOT" amount="142.3901">
-              <PolkadotCircle />
-            </TokenLine>
-          </ContextMenuLocal>
-          <ContextMenuLocal>
-            <TokenLine currency="GLMR" amount="73.8311">
-              <MoonbeamCircle />
-            </TokenLine>
-          </ContextMenuLocal>
-          <ContextMenuLocal>
-            <TokenLine currency="ACA" amount="0.2506">
-              <AcalaCircle />
-            </TokenLine>
-          </ContextMenuLocal>
+          {tokens.map((token) => (
+            <ContextMenuLocal>
+              <TokenLine currency={token.currency} amount={token.amount}>
+                <>
+                  {token.currency === "DOT" ? <PolkadotCircle /> : null}
+                  {token.currency === "GLMR" ? <MoonbeamCircle /> : null}
+                  {token.currency === "ACA" ? <AcalaCircle /> : null}
+                </>
+              </TokenLine>
+            </ContextMenuLocal>
+          ))}
         </div>
       </div>
     </div>

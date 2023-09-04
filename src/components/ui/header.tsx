@@ -16,11 +16,11 @@ export default function Header() {
         <span className="text-lg md:text-xl font-unbounded">Demo</span>
       </div>
       <div className="flex gap-4 items-center">
-        <div className="flex bg-background-dip rounded-full overflow-clip text-sm">
+        <div className="flex bg-background-dip rounded-full overflow-clip text-sm p-[1px]">
           <Link
             className={`py-1 px-3 rounded-full ${
               location.pathname === "/"
-                ? "bg-foreground-contrast text-foreground-matchBackground"
+                ? "bg-fill-ghost text-foreground-contrast"
                 : "bg-none"
             }`}
             to="/"
@@ -30,7 +30,7 @@ export default function Header() {
           <Link
             className={`py-1 px-3 rounded-full ${
               location.pathname === "/button"
-                ? "bg-foreground-contrast text-foreground-matchBackground"
+                ? "bg-fill-ghost text-foreground-contrast"
                 : "bg-none"
             }`}
             to="/button"

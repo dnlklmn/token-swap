@@ -2,11 +2,22 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "./button";
 import { DialogHeader } from "./dialog";
 
-export default function SendDialogContent() {
+interface SendDialogContentProps {
+  address?: any;
+}
+
+export default function SendDialogContent({ address }: SendDialogContentProps) {
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Send DOT to 5EZr...25Kd</DialogTitle>
+        <DialogTitle>
+          Send DOT to{" "}
+          {address.name
+            ? address.name
+            : `${address.ss58.slice(0, 4)}
+          ...
+          ${address.ss58.slice(address.ss58.length - 4, address.ss58.length)}`}
+        </DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-1">
         <span className="text-sm font-regular text-foreground-dimmed">
