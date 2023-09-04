@@ -19,7 +19,6 @@ import {
 import {
   PolkadotCircle,
   AcalaCircle,
-  MoonbeamCircle,
   HydraCircle,
   AddIcon,
   MoreIcon,
