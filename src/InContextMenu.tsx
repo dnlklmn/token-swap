@@ -19,17 +19,11 @@ import {
 
 import Identicon from "@polkadot/react-identicon";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
-import SendDialogContent from "./components/ui/dialog-content";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./components/ui/tooltip";
+import { SendDialogContent } from "./components/ui/dialog-content";
 
-import { TokenTooltipContent } from "./components/ui/tooltip-content";
 import { useState } from "react";
-import { TokenCircle, addresses, tokens } from "./main";
+import { addresses, tokens } from "./main";
+import { TokenLine } from "./components/ui/token-line";
 
 interface ItemContentProps {
   children?: JSX.Element | null;
@@ -46,31 +40,6 @@ function ItemContent({ children, label }: ItemContentProps) {
         <span>{label}</span>
       </div>
     </ContextMenuItem>
-  );
-}
-
-function TokenLine({ children, currency, amount }: ItemContentProps) {
-  return (
-    <div className="w-full flex items-center px-2 rounded-md py-1 hover:bg-fill-selected justify-between">
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <div className="w-full flex items-center gap-2 ">
-              {children}
-              <span>{currency}</span>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>
-            <TokenTooltipContent withHint currency={currency}>
-              {children}
-            </TokenTooltipContent>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-      <div className="flex gap-2">
-        <span>{amount}</span>
-      </div>
-    </div>
   );
 }
 
@@ -173,8 +142,12 @@ export default function InContextMenu() {
           </span>
           {tokens.map((token) => (
             <ContextMenuLocal token={token.currency}>
-              <TokenLine currency={token.currency} amount={token.amount}>
-                <TokenCircle chain={token.currency} />
+              <TokenLine
+                withHint
+                currency={token.currency}
+                amount={token.amount}
+              >
+                <span>{token.amount}</span>
               </TokenLine>
             </ContextMenuLocal>
           ))}

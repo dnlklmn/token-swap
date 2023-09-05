@@ -1,7 +1,6 @@
 import Crowdloans from "@w3f/polkadot-icons/keyline/Crowdloans";
 import Governance from "@w3f/polkadot-icons/keyline/Governance";
 import Staking from "@w3f/polkadot-icons/keyline/Staking";
-import { Button } from "./button";
 import {
   AcalaCircle,
   MoonbeamCircle,
@@ -11,11 +10,13 @@ import {
 import { TokenCircle } from "@/main";
 
 export function TokenTooltipContent({
+  children,
   currency,
   withHint,
 }: {
   currency?: String;
   withHint?: boolean;
+  children?: JSX.Element | null;
 }) {
   return (
     <div className="flex flex-col p-2 gap-4 text-foreground-contrast">
@@ -24,9 +25,7 @@ export function TokenTooltipContent({
           <TokenCircle chain={currency} />
           <span className="text-lg">{currency}</span>
         </div>
-        <Button variant={"outline"} size={"sm"} className="rounded-full">
-          Swap
-        </Button>
+        {children}
       </div>
       <div className="h-[1px] bg-fill-separator" />
       <div className="flex flex-col gap-2">
@@ -56,7 +55,7 @@ export function TokenTooltipContent({
             <strong>12 other networks</strong>
           </span>
         </div>
-        <div className="flex gap-5 items-center text-foreground-disabled">
+        <div className="flex gap-5 items-center text-sm text-foreground-disabled">
           <div className="flex gap-1.5 items-center hover:text-foreground-primary cursor-pointer">
             <Governance className="w-5" stroke={"currentColor"} />
             <span>Governance</span>

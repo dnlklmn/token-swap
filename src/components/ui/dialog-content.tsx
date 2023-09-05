@@ -1,16 +1,17 @@
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "./button";
 import { DialogHeader } from "./dialog";
+import ArrowDown from "@w3f/polkadot-icons/keyline/ArrowDown";
+import ChevronDown from "@w3f/polkadot-icons/keyline/ChevronDown";
+
+import { TokenCircle, tokens } from "@/main";
 
 interface SendDialogContentProps {
   address?: any;
   token?: String;
 }
 
-export default function SendDialogContent({
-  address,
-  token,
-}: SendDialogContentProps) {
+export function SendDialogContent({ address, token }: SendDialogContentProps) {
   return (
     <>
       <DialogHeader>
@@ -44,5 +45,84 @@ export default function SendDialogContent({
         </Button>
       </div>
     </>
+  );
+}
+
+export function SwapDialogContent({ token }: SendDialogContentProps) {
+  const swapTo = token === "GLMR" ? 0 : 1;
+  return (
+    <div className="flex flex-col items-center gap-6">
+      <DialogHeader className="w-full">
+        <DialogTitle>
+          Swap <strong>{token}</strong>
+        </DialogTitle>
+      </DialogHeader>
+      <div className="w-full flex flex-col gap-0.5 items-center">
+        <div className="w-full bg-background-default shadow-[inset_0_0_0_1px_rgba(0,0,0,0.03)] p-4 rounded-md flex justify-between items-center text-foreground-dimmed ">
+          <div className="flex flex-col gap-2">
+            <span className="text-sm">You send</span>
+            <span className="text-3xl font-medium text-foreground-contrast">
+              10
+            </span>
+            <span className="text-sm">Balance: 14</span>
+          </div>
+          <div className="flex flex-col gap-2 items-end justify-between h-full">
+            <span className="h-4" />
+            <Button variant={"ghost"} className="flex gap-1.5 pl-2.5">
+              <TokenCircle chain={token} /> {token}
+              <ChevronDown
+                stroke="var(--colors-foreground-contrast)"
+                className="w-3 h-3"
+              />
+            </Button>
+            <span className="text-sm">Polkadot</span>
+          </div>
+        </div>
+        <div className="h-1 z-50 flex items-center">
+          <div className="shadow-[inset_0_0_0_1px_rgba(0,0,0,0.03)] h-12 w-12 bg-background-float rounded-full flex items-center justify-center">
+            <ArrowDown
+              stroke="var(--colors-foreground-contrast)"
+              className="w-6 h-6"
+            />
+          </div>
+        </div>
+        <div className="w-full bg-background-default shadow-[inset_0_0_0_1px_rgba(0,0,0,0.03)] p-4 rounded-md flex justify-between items-center text-foreground-dimmed ">
+          <div className="flex flex-col gap-2">
+            <span className="text-sm">You receive</span>
+            <span className="text-3xl font-medium text-foreground-contrast">
+              3.1843
+            </span>
+            <span className="text-sm">Balance: 0</span>
+          </div>
+          <div className="flex flex-col gap-2 items-end justify-between h-full">
+            <span className="h-4" />
+            <Button variant={"ghost"} className="flex gap-1.5 pl-2.5">
+              <TokenCircle chain={tokens[swapTo].currency} />{" "}
+              {tokens[swapTo].currency}
+              <ChevronDown
+                stroke="var(--colors-foreground-contrast)"
+                className="w-3 h-3"
+              />
+            </Button>
+            <span className="text-sm">Polkadot</span>
+          </div>
+        </div>
+      </div>
+      <div className="w-full flex items-center justify-between text-foreground-dimmed">
+        1 {token} = 14.2357 {tokens[swapTo].currency}
+        <ChevronDown
+          stroke="var(--colors-foreground-dimmed)"
+          className="w-3 h-3"
+        />
+      </div>
+      <div className="flex items-center w-full gap-4">
+        <Button variant="outline" className="w-full rounded-full">
+          Cancel
+        </Button>
+        <Button className="w-full bg-fill-primary hover:bg-fill-primary-hover rounded-full">
+          Send
+        </Button>
+      </div>
+    </div>
   );
 }
