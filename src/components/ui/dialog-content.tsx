@@ -59,9 +59,9 @@ export function SwapDialogContent({ token }: SendDialogContentProps) {
       </DialogHeader>
       <div className="w-full flex flex-col gap-0.5 items-center">
         <div className="w-full bg-background-default shadow-[inset_0_0_0_1px_rgba(0,0,0,0.03)] p-4 rounded-md flex justify-between items-center text-foreground-dimmed ">
-          <div className="flex flex-col gap-2">
+          <div className="w-1/3 flex flex-col gap-2">
             <span className="text-sm">You send</span>
-            <span className="text-3xl font-medium text-foreground-contrast">
+            <span className="text-2xl px-2 py-1 bg-background-dip shadow-[inset_0_0_0_1px_rgba(0,0,0,0.06)] rounded-md font-medium text-foreground-contrast">
               10
             </span>
             <span className="text-sm">Balance: 14</span>
@@ -87,9 +87,9 @@ export function SwapDialogContent({ token }: SendDialogContentProps) {
           </div>
         </div>
         <div className="w-full bg-background-default shadow-[inset_0_0_0_1px_rgba(0,0,0,0.03)] p-4 rounded-md flex justify-between items-center text-foreground-dimmed ">
-          <div className="flex flex-col gap-2">
+          <div className="w-1/3 flex flex-col gap-2">
             <span className="text-sm">You receive</span>
-            <span className="text-3xl font-medium text-foreground-contrast">
+            <span className="text-2xl px-2 py-1 bg-background-dip shadow-[inset_0_0_0_1px_rgba(0,0,0,0.06)] rounded-md font-medium text-foreground-contrast">
               3.1843
             </span>
             <span className="text-sm">Balance: 0</span>

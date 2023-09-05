@@ -160,7 +160,7 @@ export default function WithButton() {
           {tokens.map((token) => (
             <TokenLine currency={token.currency} amount={token.amount}>
               <DropdownMenuLocal token={token.currency}>
-                <div className="flex flex-none gap-1.5">
+                <div className="flex flex-none gap-2.5">
                   <span>{token.amount}</span>
                   <MoreIcon size="12" />
                 </div>

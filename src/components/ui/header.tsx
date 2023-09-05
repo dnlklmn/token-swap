@@ -10,10 +10,12 @@ export default function Header() {
       <div className="flex flex-col md:flex-row gap-3 items-start md:items-center">
         <PolkadotIcon />
         <div className="h-6 w-[2px] bg-fill-separator hidden md:block" />
-        <span className="text-lg md:text-xl font-unbounded font-medium">
-          Asset Menu
-        </span>
-        <span className="text-lg md:text-xl font-unbounded">Demo</span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-lg md:text-xl font-unbounded font-medium">
+            Asset Menu
+          </span>
+          <span className="text-lg md:text-xl font-unbounded">Demo</span>
+        </div>
       </div>
       <div className="flex gap-4 items-center">
         <div className="flex bg-background-dip rounded-full overflow-clip text-sm p-[1px]">
