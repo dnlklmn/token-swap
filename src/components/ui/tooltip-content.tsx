@@ -8,22 +8,20 @@ import {
   PolkadotCircle,
   RightClickIcon,
 } from "./icons";
+import { TokenCircle } from "@/main";
 
-interface TooltipContentProps {
-  children?: JSX.Element | null;
-  currency?: String;
-  withHint?: boolean;
-}
 export function TokenTooltipContent({
-  children,
   currency,
   withHint,
-}: TooltipContentProps) {
+}: {
+  currency?: String;
+  withHint?: boolean;
+}) {
   return (
     <div className="flex flex-col p-2 gap-4 text-foreground-contrast">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          {children}
+          <TokenCircle chain={currency} />
           <span className="text-lg">{currency}</span>
         </div>
         <Button variant={"outline"} size={"sm"} className="rounded-full">
