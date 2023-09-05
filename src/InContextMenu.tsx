@@ -19,7 +19,10 @@ import {
 
 import Identicon from "@polkadot/react-identicon";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
-import { SendDialogContent } from "./components/ui/dialog-content";
+import {
+  SendDialogContent,
+  SwapDialogContent,
+} from "./components/ui/dialog-content";
 
 import { useState } from "react";
 import { addresses, tokens } from "./main";
@@ -51,6 +54,7 @@ function ContextMenuLocal({
   token?: string;
 }) {
   const [currentAddress, setCurrentAddress] = useState(0);
+  const [currentModal, setCurrentModal] = useState("send");
   return (
     <ContextMenu>
       <Dialog>
@@ -85,7 +89,10 @@ function ContextMenuLocal({
                 <>
                   <DialogTrigger
                     className="w-full"
-                    onClick={() => setCurrentAddress(index)}
+                    onClick={() => {
+                      setCurrentAddress(index);
+                      setCurrentModal("send");
+                    }}
                   >
                     <ItemContent
                       label={
@@ -108,23 +115,34 @@ function ContextMenuLocal({
                   {address.name && <ContextMenuSeparator />}
                 </>
               ))}
-              <DialogTrigger className="w-full">
-                <ItemContent label="New Address">
-                  <AddIcon />
-                </ItemContent>
-              </DialogTrigger>
+
+              <ItemContent label="New Address">
+                <AddIcon />
+              </ItemContent>
             </ContextMenuSubContent>
           </ContextMenuSub>
           <ContextMenuSeparator />
+          <DialogTrigger
+            className="w-full"
+            onClick={() => {
+              setCurrentModal("swap");
+            }}
+          >
+            <ContextMenuItem>Swap</ContextMenuItem>
+          </DialogTrigger>
           <ContextMenuItem>Stake</ContextMenuItem>
           <ContextMenuItem>Delegate</ContextMenuItem>
           <ContextMenuItem>Inspect on Explorer</ContextMenuItem>
         </ContextMenuContent>
         <DialogContent className="gap-6">
-          <SendDialogContent
-            address={addresses[currentAddress]}
-            token={token}
-          />
+          {currentModal === "send" ? (
+            <SendDialogContent
+              address={addresses[currentAddress]}
+              token={token}
+            />
+          ) : (
+            <SwapDialogContent token={token} />
+          )}
         </DialogContent>
       </Dialog>
     </ContextMenu>

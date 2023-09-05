@@ -20,7 +20,10 @@ import {
 
 import Identicon from "@polkadot/react-identicon";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { SendDialogContent } from "./components/ui/dialog-content";
+import {
+  SendDialogContent,
+  SwapDialogContent,
+} from "./components/ui/dialog-content";
 import { addresses, tokens } from "./main";
 import { useState } from "react";
 
@@ -51,6 +54,8 @@ function DropdownMenuLocal({
   token?: String;
 }) {
   const [currentAddress, setCurrentAddress] = useState(0);
+  const [currentModal, setCurrentModal] = useState("send");
+
   return (
     <DropdownMenu>
       <Dialog>
@@ -116,15 +121,27 @@ function DropdownMenuLocal({
             </DropdownMenuSubContent>
           </DropdownMenuSub>
           <DropdownMenuSeparator />
+          <DialogTrigger
+            className="w-full"
+            onClick={() => {
+              setCurrentModal("swap");
+            }}
+          >
+            <DropdownMenuItem>Swap</DropdownMenuItem>
+          </DialogTrigger>
           <DropdownMenuItem>Stake</DropdownMenuItem>
           <DropdownMenuItem>Delegate</DropdownMenuItem>
           <DropdownMenuItem>Inspect on Explorer</DropdownMenuItem>
         </DropdownMenuContent>
         <DialogContent className="gap-6">
-          <SendDialogContent
-            address={addresses[currentAddress]}
-            token={token}
-          />
+          {currentModal === "send" ? (
+            <SendDialogContent
+              address={addresses[currentAddress]}
+              token={token}
+            />
+          ) : (
+            <SwapDialogContent token={token} />
+          )}
         </DialogContent>
       </Dialog>
     </DropdownMenu>
