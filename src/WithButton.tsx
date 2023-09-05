@@ -1,4 +1,11 @@
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -21,17 +28,18 @@ import {
 import Identicon from "@polkadot/react-identicon";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import SendDialogContent from "./components/ui/dialog-content";
-import { addresses, tokens } from "./main";
+import { TokenTooltipContent } from "./components/ui/tooltip-content";
+import { TokenCircle, addresses, tokens } from "./main";
 import { useState } from "react";
-import TokenLine from "./components/ui/token-line";
 
-function ItemContent({
-  children,
-  label,
-}: {
+interface ItemContentProps {
   children?: JSX.Element;
   label?: String;
-}) {
+  currency?: String;
+  amount?: String;
+}
+
+function ItemContent({ children, label }: ItemContentProps) {
   return (
     <DropdownMenuItem>
       <div className="flex items-center gap-2 pointer-none">
@@ -39,6 +47,34 @@ function ItemContent({
         <span>{label}</span>
       </div>
     </DropdownMenuItem>
+  );
+}
+
+function TokenLine({ children, currency, amount }: ItemContentProps) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <div className="w-full flex items-center px-2 rounded-md py-1 hover:bg-fill-selected justify-between">
+          <TooltipTrigger className="w-full">
+            <div className="flex items-center gap-2 ">
+              {children}
+              <span>{currency?.toUpperCase()}</span>
+            </div>
+          </TooltipTrigger>
+          <DropdownMenuLocal token={currency}>
+            <div className="flex flex-none gap-4">
+              <span>{amount}</span>
+              <MoreIcon className="transition-all duration-75" size="16" />
+            </div>
+          </DropdownMenuLocal>
+        </div>
+        <TooltipContent>
+          <TokenTooltipContent currency={currency}>
+            {children}
+          </TokenTooltipContent>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -132,21 +168,16 @@ function DropdownMenuLocal({
 
 export default function WithButton() {
   return (
-    <div className="w-full flex flex-col-reverse lg:flex-row gap-6 px-8 text-foreground-contrast">
-      <div className="w-full lg:w-2/3 h-[512px] bg-background-dip rounded-md" />
-      <div className="flex w-full lg:w-1/3 flex-col gap-6">
+    <div className="w-full h-[512px] flex gap-6 px-8 text-foreground-contrast">
+      <div className="w-2/3 bg-background-dip rounded-md h-128" />
+      <div className="flex w-1/3 flex-col gap-6">
         <div className="flex flex-col p-4 gap-2 h-fit rounded-lg text-lg font-medium overflow-hidden bg-background-float shadow-[inset_0_0_1px_1px_rgba(0,0,0,0.07)] dark:shadow-[inset_0_0_1px_1px_rgba(255,255,255,0.05)]">
           <span className="text-lg px-2 font-medium my-4">
             Polkadot Assets Hub
           </span>
           {tokens.map((token) => (
             <TokenLine currency={token.currency} amount={token.amount}>
-              <DropdownMenuLocal token={token.currency}>
-                <div className="flex flex-none gap-4">
-                  <span>{token.amount}</span>
-                  <MoreIcon size="16" />
-                </div>
-              </DropdownMenuLocal>
+              <TokenCircle chain={token.currency} />
             </TokenLine>
           ))}
         </div>
