@@ -27,9 +27,7 @@ export default function TokenLine({ children, currency }: ItemContentProps) {
           {children}
         </div>
         <TooltipContent>
-          <TokenTooltipContent currency={currency}>
-            {children}
-          </TokenTooltipContent>
+          <TokenTooltipContent currency={currency} />
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
