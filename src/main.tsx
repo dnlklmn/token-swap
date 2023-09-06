@@ -10,9 +10,12 @@ import InContextMenu from "./InContextMenu.tsx";
 import Header from "./components/ui/header.tsx";
 import {
   AcalaCircle,
+  EthereumCircle,
+  HydraCircle,
   MoonbeamCircle,
   PolkadotCircle,
 } from "./components/ui/icons.tsx";
+import { VersionSwitch } from "./components/ui/version-switch.tsx";
 
 export const addresses = [
   {
@@ -39,6 +42,8 @@ export function TokenCircle({ chain, size }: { chain: any; size?: string }) {
       {chain === "DOT" && <PolkadotCircle size={size} />}
       {chain === "GLMR" && <MoonbeamCircle size={size} />}
       {chain === "ACA" && <AcalaCircle size={size} />}
+      {chain === "HYD" && <HydraCircle size={size} />}
+      {chain === "ETH" && <EthereumCircle size={size} />}
     </>
   );
 }
@@ -49,6 +54,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
+        <VersionSwitch mobile />
         <InContextMenu />
       </>
     ),
@@ -58,6 +64,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
+        <VersionSwitch mobile />
         <WithButton />
       </>
     ),
