@@ -27,6 +27,14 @@ import {
 import { useState } from "react";
 import { addresses, tokens } from "./main";
 import { TokenLine } from "./components/ui/token-line";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./components/ui/sheet";
 
 interface ItemContentProps {
   children?: JSX.Element | null;
@@ -149,6 +157,23 @@ function ContextMenuLocal({
   );
 }
 
+function SheetLocal({ children }: { children?: JSX.Element }) {
+  return (
+    <Sheet>
+      <SheetTrigger>{children}</SheetTrigger>
+      <SheetContent side={"bottom"}>
+        <SheetHeader>
+          <SheetTitle>Are you sure absolutely sure?</SheetTitle>
+          <SheetDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers.
+          </SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
 export default function InContextMenu() {
   return (
     <div className="w-full flex gap-6 px-8 h-full text-foreground-contrast">
@@ -158,17 +183,31 @@ export default function InContextMenu() {
           <span className="text-lg px-2 font-medium my-4">
             Polkadot Assets Hub
           </span>
-          {tokens.map((token) => (
-            <ContextMenuLocal token={token.currency}>
-              <TokenLine
-                withHint
-                currency={token.currency}
-                amount={token.amount}
-              >
-                <span>{token.amount}</span>
-              </TokenLine>
-            </ContextMenuLocal>
-          ))}
+          {window.innerWidth > 800
+            ? tokens.map((token) => (
+                <ContextMenuLocal token={token.currency}>
+                  <TokenLine
+                    withHint
+                    currency={token.currency}
+                    amount={token.amount}
+                  >
+                    <span>{token.amount}</span>
+                  </TokenLine>
+                </ContextMenuLocal>
+              ))
+            : tokens.map((token) => (
+                <ContextMenuLocal token={token.currency}>
+                  <SheetLocal>
+                    <TokenLine
+                      withHint
+                      currency={token.currency}
+                      amount={token.amount}
+                    >
+                      <span>{token.amount}</span>
+                    </TokenLine>
+                  </SheetLocal>
+                </ContextMenuLocal>
+              ))}
         </div>
       </div>
     </div>

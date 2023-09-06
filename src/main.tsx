@@ -33,12 +33,12 @@ export const tokens = [
   { currency: "ACA", amount: "0.2506" },
 ];
 
-export function TokenCircle({ chain }: { chain: any }) {
+export function TokenCircle({ chain, size }: { chain: any; size?: string }) {
   return (
     <>
-      {chain === "DOT" && <PolkadotCircle />}
-      {chain === "GLMR" && <MoonbeamCircle />}
-      {chain === "ACA" && <AcalaCircle />}
+      {chain === "DOT" && <PolkadotCircle size={size} />}
+      {chain === "GLMR" && <MoonbeamCircle size={size} />}
+      {chain === "ACA" && <AcalaCircle size={size} />}
     </>
   );
 }

@@ -22,8 +22,8 @@ export function TokenTooltipContent({
     <div className="flex flex-col p-2 gap-4 text-foreground-contrast">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <TokenCircle chain={currency} />
-          <span className="text-lg">{currency}</span>
+          <TokenCircle chain={currency} size="36" />
+          <span className="text-2xl font-semibold">{currency}</span>
         </div>
         {children}
       </div>
@@ -50,12 +50,12 @@ export function TokenTooltipContent({
               />
             </div>
           </div>
-          <span>
-            Available on <strong>Polkadot</strong> and{" "}
-            <strong>12 other networks</strong>
+          <span className="font-regular">
+            Available on <span className="font-semibold">Polkadot</span> and{" "}
+            <span className="font-semibold">12 other networks</span>
           </span>
         </div>
-        <div className="flex gap-5 items-center text-sm text-foreground-disabled">
+        <div className="flex gap-5 items-center text-sm text-foreground-disabled font-regular">
           <div className="flex gap-1.5 items-center hover:text-foreground-primary cursor-pointer">
             <Governance className="w-5" stroke={"currentColor"} />
             <span>Governance</span>
@@ -73,7 +73,7 @@ export function TokenTooltipContent({
       {withHint && (
         <>
           <div className="h-[1px] bg-fill-separator" />
-          <div className="flex items-center gap-1.5 text-sm text-foreground-disabled">
+          <div className="flex items-center gap-1.5 text-sm text-foreground-disabled font-regular">
             <div className="w-5 flex justify-center">
               <RightClickIcon size="20" />
             </div>
