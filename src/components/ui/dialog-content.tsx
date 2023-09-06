@@ -7,15 +7,29 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 import { TokenCircle, tokens } from "@/main";
 
-interface SendDialogContentProps {
-  address?: any;
-  token?: String;
+function Buttons() {
+  return (
+    <div className="flex items-center absolute px-3 lg:px-0 lg:relative bottom-4 lg:bottom-0 w-full gap-4">
+      <DialogPrimitive.Close className="w-full">
+        <Button variant="outline" className="w-full">
+          Cancel
+        </Button>
+      </DialogPrimitive.Close>
+      <Button className="w-full">Send</Button>
+    </div>
+  );
 }
 
-export function SendDialogContent({ address, token }: SendDialogContentProps) {
+export function SendDialogContent({
+  address,
+  token,
+}: {
+  address?: any;
+  token?: String;
+}) {
   return (
-    <>
-      <DialogHeader>
+    <div className="w-full py-2 lg:py-0 h-full lg:h-fit flex flex-col  items-center gap-6 ">
+      <DialogHeader className="w-full">
         <DialogTitle>
           Send <span className="font-semibold">{token}</span> to{" "}
           <span className="font-semibold">
@@ -27,7 +41,7 @@ export function SendDialogContent({ address, token }: SendDialogContentProps) {
           </span>
         </DialogTitle>
       </DialogHeader>
-      <div className="flex flex-col gap-1">
+      <div className="w-full flex flex-col gap-1">
         <span className="text-sm font-regular text-foreground-dimmed">
           Amount
         </span>
@@ -39,22 +53,15 @@ export function SendDialogContent({ address, token }: SendDialogContentProps) {
           <span className="font-semibold">{token}</span>
         </div>
       </div>
-      <div className="flex items-center w-full gap-4">
-        <Button variant="outline" className="w-full rounded-full">
-          Cancel
-        </Button>
-        <Button className="w-full bg-fill-primary hover:bg-fill-primary-hover rounded-full">
-          Send
-        </Button>
-      </div>
-    </>
+      <Buttons />
+    </div>
   );
 }
 
-export function SwapDialogContent({ token }: SendDialogContentProps) {
+export function SwapDialogContent({ token }: { token?: String }) {
   const swapTo = token === "GLMR" ? 0 : 1;
   return (
-    <div className="w-full py-2 lg:py-0 h-full lg:h-fit flex flex-col justify-between lg:justify-normal  items-center gap-6 ">
+    <div className="w-full py-2 lg:py-0 h-full lg:h-fit flex flex-col  items-center gap-6 ">
       <DialogHeader className="w-full">
         <DialogTitle>
           Swap <strong>{token}</strong>
@@ -116,15 +123,7 @@ export function SwapDialogContent({ token }: SendDialogContentProps) {
           />
         </div>
       </div>
-
-      <div className="flex items-center w-full gap-4">
-        <DialogPrimitive.Close className="w-full">
-          <Button variant="outline" className="w-full">
-            Cancel
-          </Button>
-        </DialogPrimitive.Close>
-        <Button className="w-full">Send</Button>
-      </div>
+      <Buttons />
     </div>
   );
 }

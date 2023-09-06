@@ -5,7 +5,7 @@ export function VersionSwitch({ mobile }: { mobile?: boolean }) {
     <div
       className={`${mobile ? "flex" : "hidden"} ${
         mobile ? "lg:hidden" : "lg:flex"
-      } bg-background-dip rounded-full overflow-clip text-sm p-[1px] mx-4 lg:mx-0 mb-4 lg:my-0 `}
+      } bg-background-dip rounded-full overflow-clip text-sm p-[1px] mx-4 lg:mx-0 mb-4 lg:my-0 text-foreground-contrast `}
     >
       <Link
         className={`w-full lg:w-fit text-center font-semibold py-2 lg:py-1 px-3 rounded-full ${

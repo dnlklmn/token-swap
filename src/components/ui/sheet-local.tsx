@@ -14,18 +14,24 @@ function MenuItem({
   withChevron,
   onClick,
   children,
+  disabled,
 }: {
   title?: string;
   withChevron?: boolean;
   onClick?: () => void;
   children?: JSX.Element | null;
+  disabled?: boolean;
 }) {
   return (
     <div
       className="w-full py-3 p-6 flex items-center justify-between"
       onClick={onClick}
     >
-      <div className="flex items-center gap-2">
+      <div
+        className={`${
+          disabled && "text-foreground-disabled"
+        } flex items-center gap-2`}
+      >
         {children}
         {title}
       </div>
@@ -42,7 +48,6 @@ export default function SheetLocal({
   currency?: string;
 }) {
   const [menu, setMenu] = useState("initial");
-  const [currentModal, setCurrentModal] = useState("send");
 
   function Initial() {
     return (
@@ -59,7 +64,6 @@ export default function SheetLocal({
           withChevron
           onClick={() => {
             setMenu("send");
-            setCurrentModal("send");
           }}
         />
         <div className="h-[1px] my-2 bg-fill-separator mx-6" />
@@ -80,6 +84,7 @@ export default function SheetLocal({
     return (
       <>
         <MenuItem
+          disabled
           title="Back"
           onClick={() => {
             setMenu("initial");
@@ -87,21 +92,21 @@ export default function SheetLocal({
         >
           <ActionLeft stroke="currentColor" className="w-6 h-6" />
         </MenuItem>
-        <MenuItem title="Assets Hub">
+        <MenuItem title="Assets Hub" disabled>
           <TokenCircle chain="DOT" />
         </MenuItem>
         <div className="h-[1px] my-2 bg-fill-separator mx-6" />
-        <MenuItem title="Polkadot Relay Chain">
+        <MenuItem title="Polkadot Relay Chain" disabled>
           <TokenCircle chain="DOT" />
         </MenuItem>
-        <MenuItem title="Acala">
+        <MenuItem title="Acala" disabled>
           <TokenCircle chain="ACA" />
         </MenuItem>
-        <MenuItem title="HydraDX">
+        <MenuItem title="HydraDX" disabled>
           <TokenCircle chain="HYD" />
         </MenuItem>
         <div className="h-[1px] my-2 bg-fill-separator mx-6" />
-        <MenuItem title="Ethereum (through bridge)">
+        <MenuItem title="Ethereum (through bridge)" disabled>
           <TokenCircle chain="ETH" />
         </MenuItem>
       </>
@@ -148,15 +153,11 @@ export default function SheetLocal({
         <MenuItem title="Add new">
           <AddIcon />
         </MenuItem>
-        <DialogContent className="gap-6">
-          {currentModal === "send" ? (
-            <SendDialogContent
-              address={addresses[currentAddress]}
-              token={currency}
-            />
-          ) : (
-            <SwapDialogContent token={currency} />
-          )}
+        <DialogContent className="w-full h-full gap-6">
+          <SendDialogContent
+            address={addresses[currentAddress]}
+            token={currency}
+          />
         </DialogContent>
       </Dialog>
     );

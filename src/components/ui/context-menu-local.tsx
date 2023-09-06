@@ -1,14 +1,14 @@
 import { useState } from "react";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "./dropdown-menu";
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+} from "./context-menu";
 import { Dialog, DialogContent, DialogTrigger } from "./dialog";
 import { addresses } from "@/main";
 import Identicon from "@polkadot/react-identicon";
@@ -26,42 +26,41 @@ function ItemContent({
   label,
   disabled,
 }: {
-  children?: JSX.Element;
+  children?: JSX.Element | null;
   label?: String;
   disabled?: boolean;
 }) {
   return (
-    <DropdownMenuItem disabled={disabled}>
+    <ContextMenuItem disabled={disabled}>
       <div className="flex items-center gap-2 pointer-none">
         {children}
         <span>{label}</span>
       </div>
-    </DropdownMenuItem>
+    </ContextMenuItem>
   );
 }
 
-export default function DropdownMenuLocal({
+export default function ContextMenuLocal({
   children,
   token,
 }: {
   children?: JSX.Element;
-  token?: String;
+  token?: string;
 }) {
   const [currentAddress, setCurrentAddress] = useState(0);
   const [currentModal, setCurrentModal] = useState("send");
-
   return (
-    <DropdownMenu>
+    <ContextMenu>
       <Dialog>
-        <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
-        <DropdownMenuContent className="w-64">
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Teleport to</DropdownMenuSubTrigger>
-            <DropdownMenuSubContent>
+        <ContextMenuTrigger>{children}</ContextMenuTrigger>
+        <ContextMenuContent className="w-64">
+          <ContextMenuSub>
+            <ContextMenuSubTrigger>Teleport to</ContextMenuSubTrigger>
+            <ContextMenuSubContent>
               <ItemContent label="Assets Hub" disabled>
                 <PolkadotCircle />
               </ItemContent>
-              <DropdownMenuSeparator />
+              <ContextMenuSeparator />
               <ItemContent label="Polkadot Relay Chain" disabled>
                 <PolkadotCircle />
               </ItemContent>
@@ -71,15 +70,15 @@ export default function DropdownMenuLocal({
               <ItemContent label="HydraDX" disabled>
                 <HydraCircle />
               </ItemContent>
-              <DropdownMenuSeparator />
+              <ContextMenuSeparator />
               <ItemContent label="Ethereum (through bridge)" disabled>
                 <EthereumCircle />
               </ItemContent>
-            </DropdownMenuSubContent>
-          </DropdownMenuSub>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Send to Address</DropdownMenuSubTrigger>
-            <DropdownMenuSubContent className="w-48">
+            </ContextMenuSubContent>
+          </ContextMenuSub>
+          <ContextMenuSub>
+            <ContextMenuSubTrigger>Send to Address</ContextMenuSubTrigger>
+            <ContextMenuSubContent className="w-48">
               {addresses.map((address, index) => (
                 <>
                   <DialogTrigger
@@ -107,29 +106,28 @@ export default function DropdownMenuLocal({
                       />
                     </ItemContent>
                   </DialogTrigger>
-                  {address.name && <DropdownMenuSeparator />}
+                  {address.name && <ContextMenuSeparator />}
                 </>
               ))}
-              <DialogTrigger className="w-full">
-                <ItemContent label="New Address">
-                  <AddIcon />
-                </ItemContent>
-              </DialogTrigger>
-            </DropdownMenuSubContent>
-          </DropdownMenuSub>
-          <DropdownMenuSeparator />
+
+              <ItemContent label="New Address">
+                <AddIcon />
+              </ItemContent>
+            </ContextMenuSubContent>
+          </ContextMenuSub>
+          <ContextMenuSeparator />
           <DialogTrigger
             className="w-full"
             onClick={() => {
               setCurrentModal("swap");
             }}
           >
-            <DropdownMenuItem>Swap</DropdownMenuItem>
+            <ContextMenuItem>Swap</ContextMenuItem>
           </DialogTrigger>
-          <DropdownMenuItem disabled>Stake</DropdownMenuItem>
-          <DropdownMenuItem disabled>Delegate</DropdownMenuItem>
-          <DropdownMenuItem disabled>Inspect on Explorer</DropdownMenuItem>
-        </DropdownMenuContent>
+          <ContextMenuItem disabled>Stake</ContextMenuItem>
+          <ContextMenuItem disabled>Delegate</ContextMenuItem>
+          <ContextMenuItem disabled>Inspect on Explorer</ContextMenuItem>
+        </ContextMenuContent>
         <DialogContent className="gap-6">
           {currentModal === "send" ? (
             <SendDialogContent
@@ -141,6 +139,6 @@ export default function DropdownMenuLocal({
           )}
         </DialogContent>
       </Dialog>
-    </DropdownMenu>
+    </ContextMenu>
   );
 }
