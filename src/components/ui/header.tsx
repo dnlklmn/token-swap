@@ -1,6 +1,5 @@
 import { PolkadotIcon } from "./icons";
 import ThemeSwitch from "./theme-switch";
-import { VersionSwitch } from "./version-switch";
 
 export default function Header() {
   return (

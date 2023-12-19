@@ -13,7 +13,6 @@ import {
   MoonbeamCircle,
   PolkadotCircle,
 } from "./components/ui/icons.tsx";
-import { VersionSwitch } from "./components/ui/version-switch.tsx";
 import TokenSwap from "./components/pages/TokenSwap.tsx";
 
 export const addresses = [
@@ -53,7 +52,6 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <VersionSwitch mobile />
         <TokenSwap />
       </>
     ),
