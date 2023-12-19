@@ -1,5 +1,5 @@
 import { tokens } from "@/main";
-import { ChevronDownIcon } from "lucide-react";
+import { CheckIcon, ChevronDownIcon } from "lucide-react";
 import { Button } from "./button";
 import { TokenIcon } from "./icons";
 import { Input } from "./input";
@@ -13,15 +13,26 @@ import {
 export default function Send({
   send,
   setSend,
+  value,
+  onChangeX,
+  setRatio,
 }: {
   send: string;
   setSend: (token: string) => void;
+  setRatio: (token: number) => void;
+  value: string;
+  onChangeX: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <div className="bg-background-float flex w-full justify-between gap-16 rounded-lg p-3">
       <div className="flex flex-col gap-3">
         <span className="fint-inter text-foreground-dimmed text-xs">You send</span>
-        <Input className="h-10 w-24 p-1.5 text-2xl" value="0" />
+        <Input
+          placeholder="10"
+          value={value}
+          onChange={onChangeX}
+          className="h-10 w-24 p-1.5 text-2xl"
+        />
         <span className="fint-inter text-foreground-dimmed text-xs">14 Balance</span>
       </div>
       <div className="flex flex-col items-end justify-end gap-3">
@@ -33,13 +44,20 @@ export default function Send({
               <ChevronDownIcon size={16} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent className="flex flex-col gap-1">
             {tokens.map((token) => {
               return (
-                <DropdownMenuItem onClick={() => setSend(token.currency)}>
+                <DropdownMenuItem
+                  className={`${token.currency === send && "bg-fill-selected"}`}
+                  onClick={() => {
+                    setSend(token.currency);
+                    setRatio(Number(Math.random().toFixed(2)));
+                  }}
+                >
                   <div className="flex items-center gap-1.5">
                     <TokenIcon token={token.currency} />
                     <span>{token.currency}</span>
+                    {token.currency === send && <CheckIcon size={16} />}
                   </div>
                 </DropdownMenuItem>
               );
