@@ -88,6 +88,24 @@ export function RightClickIcon({ size, className }: IconProps) {
   );
 }
 
+export function ChevronDownIcon({ size }: { size?: number }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size ? size : "24"}
+      height="24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 29 29"
+    >
+      <path d="M25.988 8.563l-11.01 13-10.99-13" data-nofill="true"></path>
+    </svg>
+  );
+}
+
 // token icons
 export function AcalaCircle({ size, className }: IconProps) {
   return (
@@ -190,34 +208,24 @@ export function EthereumCircle({ size, className }: IconProps) {
         fill="#627EEA"
         d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12z"
       ></path>
-      <path
-        fill="#fff"
-        fillOpacity="0.602"
-        d="M12.374 2.998v6.653l5.623 2.513-5.623-9.166z"
-      ></path>
-      <path
-        fill="#fff"
-        d="M12.374 2.998l-5.623 9.166 5.623-2.513V2.998z"
-      ></path>
-      <path
-        fill="#fff"
-        fillOpacity="0.602"
-        d="M12.374 16.474v4.521L18 13.21l-5.626 3.264z"
-      ></path>
-      <path
-        fill="#fff"
-        d="M12.374 20.995v-4.52L6.751 13.21l5.623 7.785z"
-      ></path>
-      <path
-        fill="#fff"
-        fillOpacity="0.2"
-        d="M12.374 15.428l5.623-3.264-5.623-2.513v5.777z"
-      ></path>
-      <path
-        fill="#fff"
-        fillOpacity="0.602"
-        d="M6.751 12.164l5.623 3.264V9.651L6.75 12.164z"
-      ></path>
+      <path fill="#fff" fillOpacity="0.602" d="M12.374 2.998v6.653l5.623 2.513-5.623-9.166z"></path>
+      <path fill="#fff" d="M12.374 2.998l-5.623 9.166 5.623-2.513V2.998z"></path>
+      <path fill="#fff" fillOpacity="0.602" d="M12.374 16.474v4.521L18 13.21l-5.626 3.264z"></path>
+      <path fill="#fff" d="M12.374 20.995v-4.52L6.751 13.21l5.623 7.785z"></path>
+      <path fill="#fff" fillOpacity="0.2" d="M12.374 15.428l5.623-3.264-5.623-2.513v5.777z"></path>
+      <path fill="#fff" fillOpacity="0.602" d="M6.751 12.164l5.623 3.264V9.651L6.75 12.164z"></path>
     </svg>
+  );
+}
+
+export function TokenIcon({ token }: { token?: string }) {
+  return (
+    <>
+      {token === "DOT" && <PolkadotCircle />}
+      {token === "ACA" && <AcalaCircle />}
+      {token === "GLMR" && <MoonbeamCircle />}
+      {token === "ETH" && <EthereumCircle />}
+      {token === "HYD" && <HydraCircle />}
+    </>
   );
 }

@@ -4,19 +4,16 @@ import { VersionSwitch } from "./version-switch";
 
 export default function Header() {
   return (
-    <div className="px-4 lg:px-8 w-full flex items-start md:items-center justify-between sticky top-0 bg-background-default text-foreground-contrast py-6 lg:py-10">
-      <div className="flex flex-col md:flex-row gap-3 items-start md:items-center">
+    <div className="bg-background-default text-foreground-contrast sticky top-0 flex w-full items-start justify-between px-4 py-6 md:items-center lg:px-8 lg:py-10">
+      <div className="flex flex-col items-start gap-3 md:flex-row md:items-center">
         <PolkadotIcon />
-        <div className="h-6 w-[2px] bg-fill-separator hidden md:block" />
+        <div className="bg-fill-separator hidden h-6 w-[2px] md:block" />
         <div className="flex items-center gap-1.5">
-          <span className="text-lg md:text-xl font-unbounded font-medium">
-            Asset Menu
-          </span>
-          <span className="text-lg md:text-xl font-unbounded">Demo</span>
+          <span className="font-unbounded text-lg font-medium md:text-xl">Token Swap</span>
+          <span className="font-unbounded text-lg md:text-xl">Demo</span>
         </div>
       </div>
-      <div className="flex gap-4 items-center">
-        <VersionSwitch />
+      <div className="flex items-center gap-4">
         <ThemeSwitch />
       </div>
     </div>

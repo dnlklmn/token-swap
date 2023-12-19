@@ -5,8 +5,6 @@ import "./theme/globals.css";
 import "polkadot-theme/global.css";
 import "polkadot-theme/light.css";
 import "polkadot-theme/dark.css";
-import WithButton from "./WithButton.tsx";
-import InContextMenu from "./InContextMenu.tsx";
 import Header from "./components/ui/header.tsx";
 import {
   AcalaCircle,
@@ -16,6 +14,7 @@ import {
   PolkadotCircle,
 } from "./components/ui/icons.tsx";
 import { VersionSwitch } from "./components/ui/version-switch.tsx";
+import TokenSwap from "./components/pages/TokenSwap.tsx";
 
 export const addresses = [
   {
@@ -55,17 +54,7 @@ const router = createBrowserRouter([
       <>
         <Header />
         <VersionSwitch mobile />
-        <InContextMenu />
-      </>
-    ),
-  },
-  {
-    path: "/button",
-    element: (
-      <>
-        <Header />
-        <VersionSwitch mobile />
-        <WithButton />
+        <TokenSwap />
       </>
     ),
   },
@@ -74,5 +63,5 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
+  </React.StrictMode>,
 );
