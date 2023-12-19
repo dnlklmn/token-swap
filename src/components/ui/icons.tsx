@@ -93,7 +93,6 @@ export function ChevronDownIcon({ size }: { size?: number }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={size ? size : "24"}
-      height="24"
       fill="none"
       stroke="currentColor"
       strokeLinecap="round"
@@ -102,6 +101,23 @@ export function ChevronDownIcon({ size }: { size?: number }) {
       viewBox="0 0 29 29"
     >
       <path d="M25.988 8.563l-11.01 13-10.99-13" data-nofill="true"></path>
+    </svg>
+  );
+}
+
+export function ArrowDownIcon({ size }: { size?: number }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size ? size : "24"}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 28 28"
+    >
+      <path d="M13.991 25V2M24 15.8L13.991 26 4 15.8" data-nofill="true"></path>
     </svg>
   );
 }
